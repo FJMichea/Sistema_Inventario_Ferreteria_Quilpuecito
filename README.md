@@ -10,31 +10,31 @@ Este proyecto consiste en el desarrollo de un sistema de gestión web básico, d
 
 El sistema implementado ofrece las siguientes características clave:
 
-* [cite_start]**Gestión de Productos:** Permite registrar nuevos productos, visualizar un listado dinámico de los productos almacenados con su nombre, cantidad, precio y merma, y controlar el inventario en tiempo real.
-* [cite_start]**Gestión de Trabajadores:** Despliega un listado de todos los trabajadores registrados, incluyendo nombre y cargo, fundamental para la asignación de productos.
-* [cite_start]**Asignación de Productos:** Permite asignar productos específicos a trabajadores seleccionándolos desde listas desplegables, registrando la cantidad asignada.
-* [cite_start]**Control de Merma:** Facilita el registro de pérdida o deterioro de productos, actualizando automáticamente la cantidad de merma asociada a cada producto en el sistema.
-* [cite_start]**Informes Básicos:** Posibilidad de generar informes (ej. productos asignados por trabajador) mediante consultas directas a la base de datos, útil para supervisión interna y planificación de stock.
+* **Gestión de Productos:** Permite registrar nuevos productos, visualizar un listado dinámico de los productos almacenados con su nombre, cantidad, precio y merma, y controlar el inventario en tiempo real.
+* **Gestión de Trabajadores:** Despliega un listado de todos los trabajadores registrados, incluyendo nombre y cargo, fundamental para la asignación de productos.
+* **Asignación de Productos:** Permite asignar productos específicos a trabajadores seleccionándolos desde listas desplegables, registrando la cantidad asignada.
+* **Control de Merma:** Facilita el registro de pérdida o deterioro de productos, actualizando automáticamente la cantidad de merma asociada a cada producto en el sistema.
+* **Informes Básicos:** Posibilidad de generar informes (ej. productos asignados por trabajador) mediante consultas directas a la base de datos, útil para supervisión interna y planificación de stock.
 
 ## Tecnologías Utilizadas
 
-* [cite_start]**Lenguaje de Programación:** Python 
-* [cite_start]**Framework Web:** Flask 
-* [cite_start]**Base de Datos:** SQLite 
-* [cite_start]**Interfaz de Usuario:** HTML 
-* [cite_start]**Herramientas de Desarrollo:** Visual Studio Code [cite: 40][cite_start], DB Browser for SQLite [cite: 40][cite_start], Trello (simulado para gestión ágil) 
+* **Lenguaje de Programación:** Python 
+* **Framework Web:** Flask 
+* **Base de Datos:** SQLite 
+* **Interfaz de Usuario:** HTML 
+* **Herramientas de Desarrollo:** Visual Studio Code [cite: 40][cite_start], DB Browser for SQLite [cite: 40][cite_start], Trello (simulado para gestión ágil) 
 
 ## Metodología de Desarrollo
 
-[cite_start]Para la planificación y gestión de las actividades del proyecto, se utilizó la metodología ágil **Kanban**. [cite_start]Esto permitió dividir el trabajo en etapas claras y manejables, simulando un flujo de trabajo mediante columnas visuales (`Por hacer`, `En desarrollo`, `Terminado`) para organizar las tareas y cumplir con los tiempos establecidos.
+Para la planificación y gestión de las actividades del proyecto, se utilizó la metodología ágil **Kanban**. [cite_start]Esto permitió dividir el trabajo en etapas claras y manejables, simulando un flujo de trabajo mediante columnas visuales (`Por hacer`, `En desarrollo`, `Terminado`) para organizar las tareas y cumplir con los tiempos establecidos.
 
 ## Estructura de la Base de Datos
 
 El sistema utiliza una base de datos SQLite con las siguientes tablas principales:
 
-* [cite_start]`productos`: Para almacenar la información de cada producto (ID, nombre, cantidad, precio, merma).
-* [cite_start]`trabajadores`: Para registrar a los empleados (ID, nombre, cargo).
-* [cite_start]`asignaciones`: Para registrar qué producto fue asignado a qué trabajador, incluyendo la cantidad y la fecha.
+* `productos`: Para almacenar la información de cada producto (ID, nombre, cantidad, precio, merma).
+* `trabajadores`: Para registrar a los empleados (ID, nombre, cargo).
+* `asignaciones`: Para registrar qué producto fue asignado a qué trabajador, incluyendo la cantidad y la fecha.
 
 ## Cómo Ejecutar el Proyecto
 
