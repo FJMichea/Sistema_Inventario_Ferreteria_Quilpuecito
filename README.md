@@ -4,7 +4,8 @@
 
 Este proyecto consiste en el desarrollo de un sistema de gestión web básico, diseñado para apoyar la organización interna de pequeñas empresas del rubro ferretero. [cite_start]Fue creado como Trabajo de Aplicación Práctica (TAP) para la carrera de Analista Programador y Análisis de Sistemas en AIEP.
 
-[cite_start]La solución aborda problemáticas comunes en ferreterías que operan con procesos manuales o dispersos para el control de stock, asignaciones y pérdidas de productos. [cite_start]Generando errores, mermas y falta de trazabilidad. El sistema proporciona una herramienta eficiente y económica para digitalizar y organizar estos procesos.
+La solución aborda problemáticas comunes en ferreterías que operan con procesos manuales o dispersos para el control de stock, asignaciones y pérdidas de productos. 
+Generando errores, mermas y falta de trazabilidad. El sistema proporciona una herramienta eficiente y económica para digitalizar y organizar estos procesos.
 
 ## Funcionalidades Principales
 
@@ -110,13 +111,13 @@ Para poner en marcha este sistema localmente, sigue los siguientes pasos:
 
 ## Conclusiones y Reflexiones
 
-[cite_start]El desarrollo de este sistema permitió la aplicación práctica de conocimientos en desarrollo backend, bases de datos y planificación ágil. [cite_start]Se comprobó que tecnologías ligeras como Flask y SQLite son viables para las necesidades de pequeñas empresas. [cite_start]Este proyecto no solo representa una solución técnica funcional, sino también un ejemplo del compromiso con la mejora continua y la aplicación práctica del conocimiento adquirido durante la formación profesional.
+El desarrollo de este sistema permitió la aplicación práctica de conocimientos en desarrollo backend, bases de datos y planificación ágil. [cite_start]Se comprobó que tecnologías ligeras como Flask y SQLite son viables para las necesidades de pequeñas empresas. [cite_start]Este proyecto no solo representa una solución técnica funcional, sino también un ejemplo del compromiso con la mejora continua y la aplicación práctica del conocimiento adquirido durante la formación profesional.
 
 ## Mejoras Futuras
 
 Se proponen las siguientes mejoras para futuras iteraciones del sistema:
 * Integrar autenticación de usuarios para control de acceso.
 * Generación de reportes en formato PDF.
-* [cite_start]Mejoras visuales en la interfaz de usuario con CSS o Bootstrap.
+* Mejoras visuales en la interfaz de usuario con CSS o Bootstrap.
 
 ---
