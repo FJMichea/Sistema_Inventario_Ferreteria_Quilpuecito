@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Merma</title>
+</head>
+<body>
+    <h2>Registrar Merma de Producto</h2>
+    <form method="post">
+        Producto:<br>
+        <select name="producto_id" required>
+            {% for producto in productos %}
+                <option value="{{producto.id}}">{{producto.nombre}}</option>
+            {% endfor %}
+        </select><br><br>
+
+        Cantidad de Merma:<br>
+        <input type="number" name="merma" required><br><br>
+        <button type="submit">Registrar Merma</button>
+    </form>
+    <br>
+    <a href="/productos">Volver a Productos</a>
+</body>
+</html>

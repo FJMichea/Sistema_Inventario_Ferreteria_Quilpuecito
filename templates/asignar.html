@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Asignar Producto</title>
+</head>
+<body>
+    <h2>Asignar Producto a Trabajador</h2>
+    <form method="post">
+        Producto:<br>
+        <select name="producto_id" required>
+            {% for producto in productos %}
+                <option value="{{producto.id}}">{{producto.nombre}}</option>
+            {% endfor %}
+        </select><br><br>
+
+        Trabajador:<br>
+        <select name="trabajador_id" required>
+            {% for trabajador in trabajadores %}
+                <option value="{{trabajador.id}}">{{trabajador.nombre}}</option>
+            {% endfor %}
+        </select><br><br>
+
+        Cantidad:<br>
+        <input type="number" name="cantidad" required><br><br>
+        <button type="submit">Registrar asignación</button>
+    </form>
+    <br>
+    <a href="/">Volver al inicio</a>
+</body>
+</html>
