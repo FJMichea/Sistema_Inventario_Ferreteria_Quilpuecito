@@ -111,7 +111,7 @@ Para poner en marcha este sistema localmente, sigue los siguientes pasos:
 
 ## Conclusiones y Reflexiones
 
-El desarrollo de este sistema permitió la aplicación práctica de conocimientos en desarrollo backend, bases de datos y planificación ágil. [cite_start]Se comprobó que tecnologías ligeras como Flask y SQLite son viables para las necesidades de pequeñas empresas. [cite_start]Este proyecto no solo representa una solución técnica funcional, sino también un ejemplo del compromiso con la mejora continua y la aplicación práctica del conocimiento adquirido durante la formación profesional.
+El desarrollo de este sistema permitió la aplicación práctica de conocimientos en desarrollo backend, bases de datos y planificación ágil. Se comprobó que tecnologías ligeras como Flask y SQLite son viables para las necesidades de pequeñas empresas. Este proyecto no solo representa una solución técnica funcional, sino también un ejemplo del compromiso con la mejora continua y la aplicación práctica del conocimiento adquirido durante la formación profesional.
 
 ## Mejoras Futuras
 
