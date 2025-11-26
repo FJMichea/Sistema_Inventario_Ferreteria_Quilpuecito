@@ -2,7 +2,7 @@
 
 ## Descripción del Proyecto
 
-Este proyecto consiste en el desarrollo de un sistema de gestión web básico, diseñado para apoyar la organización interna de pequeñas empresas del rubro ferretero. [cite_start]Fue creado como Trabajo de Aplicación Práctica (TAP) para la carrera de Analista Programador y Análisis de Sistemas en AIEP.
+Este proyecto consiste en el desarrollo de un sistema de gestión web básico, diseñado para apoyar la organización interna de pequeñas empresas del rubro ferretero. Fue creado como Trabajo de Aplicación Práctica (TAP) para la carrera de Analista Programador y Análisis de Sistemas en AIEP.
 
 La solución aborda problemáticas comunes en ferreterías que operan con procesos manuales o dispersos para el control de stock, asignaciones y pérdidas de productos. 
 Generando errores, mermas y falta de trazabilidad. El sistema proporciona una herramienta eficiente y económica para digitalizar y organizar estos procesos.
