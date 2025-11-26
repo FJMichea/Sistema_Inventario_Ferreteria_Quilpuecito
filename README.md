@@ -23,11 +23,11 @@ El sistema implementado ofrece las siguientes características clave:
 * **Framework Web:** Flask 
 * **Base de Datos:** SQLite 
 * **Interfaz de Usuario:** HTML 
-* **Herramientas de Desarrollo:** Visual Studio Code [cite: 40][cite_start], DB Browser for SQLite [cite: 40][cite_start], Trello (simulado para gestión ágil) 
+* **Herramientas de Desarrollo:** Visual Studio Code , DB Browser for SQLite , Trello (simulado para gestión ágil) 
 
 ## Metodología de Desarrollo
 
-Para la planificación y gestión de las actividades del proyecto, se utilizó la metodología ágil **Kanban**. [cite_start]Esto permitió dividir el trabajo en etapas claras y manejables, simulando un flujo de trabajo mediante columnas visuales (`Por hacer`, `En desarrollo`, `Terminado`) para organizar las tareas y cumplir con los tiempos establecidos.
+Para la planificación y gestión de las actividades del proyecto, se utilizó la metodología ágil **Kanban**. Esto permitió dividir el trabajo en etapas claras y manejables, simulando un flujo de trabajo mediante columnas visuales (`Por hacer`, `En desarrollo`, `Terminado`) para organizar las tareas y cumplir con los tiempos establecidos.
 
 ## Estructura de la Base de Datos
 
@@ -76,9 +76,9 @@ Para poner en marcha este sistema localmente, sigue los siguientes pasos:
     ```
     La aplicación se ejecutará en `http://127.0.0.1:5000`.
 
+
 ## Capturas de Pantalla
 
-*(Aquí es donde pegarías las imágenes. Puedes arrastrarlas directamente al editor de `README.md` en GitHub o usar la opción de subir imágenes. Una vez subidas, te darán un enlace para pegarlo en el `README.md`.)*
 
 * **Página de Inicio:**
     ![Página de Inicio]<img width="468" alt="image" src="https://github.com/user-attachments/assets/c1299b08-59be-4c1e-89f0-b4eeefdb081e" />
