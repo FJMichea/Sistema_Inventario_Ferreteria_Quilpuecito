@@ -1,7 +1,9 @@
 DROP TABLE IF EXISTS productos;
 DROP TABLE IF EXISTS trabajadores;
 DROP TABLE IF EXISTS asignaciones;
+DROP TABLE IF EXISTS usuarios; -- Agregado para limpiar usuarios antiguos si reinicias la DB
 
+-- Tabla de Productos
 CREATE TABLE productos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT NOT NULL,
@@ -10,12 +12,14 @@ CREATE TABLE productos (
     merma INTEGER DEFAULT 0
 );
 
+-- Tabla de Trabajadores
 CREATE TABLE trabajadores (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre TEXT NOT NULL,
     cargo TEXT NOT NULL
 );
 
+-- Tabla de Asignaciones
 CREATE TABLE asignaciones (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     producto_id INTEGER,
@@ -24,4 +28,11 @@ CREATE TABLE asignaciones (
     cantidad INTEGER,
     FOREIGN KEY(producto_id) REFERENCES productos(id),
     FOREIGN KEY(trabajador_id) REFERENCES trabajadores(id)
+);
+
+ Usuarios (Para el sistema de Login)
+CREATE TABLE usuarios (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL
 );
