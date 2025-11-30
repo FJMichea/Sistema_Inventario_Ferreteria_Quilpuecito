@@ -30,7 +30,7 @@ CREATE TABLE asignaciones (
     FOREIGN KEY(trabajador_id) REFERENCES trabajadores(id)
 );
 
- Usuarios (Para el sistema de Login)
+-- NUEVA TABLA: Usuarios (Para el sistema de Login)
 CREATE TABLE usuarios (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL UNIQUE,

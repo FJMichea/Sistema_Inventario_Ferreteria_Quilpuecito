@@ -1,31 +1,50 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Asignar Producto</title>
-</head>
-<body>
-    <h2>Asignar Producto a Trabajador</h2>
-    <form method="post">
-        Producto:<br>
-        <select name="producto_id" required>
-            {% for producto in productos %}
-                <option value="{{producto.id}}">{{producto.nombre}}</option>
-            {% endfor %}
-        </select><br><br>
+{% extends 'base.html' %}
 
-        Trabajador:<br>
-        <select name="trabajador_id" required>
-            {% for trabajador in trabajadores %}
-                <option value="{{trabajador.id}}">{{trabajador.nombre}}</option>
-            {% endfor %}
-        </select><br><br>
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">📋 Asignar Herramienta a Trabajador</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('asignar') }}">
+                    
+                    <div class="mb-3">
+                        <label for="trabajador" class="form-label">Seleccione Trabajador</label>
+                        <select name="trabajador_id" id="trabajador" class="form-select" required>
+                            <option value="" selected disabled>-- Elegir Trabajador --</option>
+                            {% for trabajador in trabajadores %}
+                                <option value="{{ trabajador['id'] }}">{{ trabajador['nombre'] }} ({{ trabajador['cargo'] }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-        Cantidad:<br>
-        <input type="number" name="cantidad" required><br><br>
-        <button type="submit">Registrar asignación</button>
-    </form>
-    <br>
-    <a href="/">Volver al inicio</a>
-</body>
-</html>
+                    <div class="mb-3">
+                        <label for="producto" class="form-label">Seleccione Producto</label>
+                        <select name="producto_id" id="producto" class="form-select" required>
+                            <option value="" selected disabled>-- Elegir Producto --</option>
+                            {% for producto in productos %}
+                                <option value="{{ producto['id'] }}">
+                                    {{ producto['nombre'] }} (Stock: {{ producto['cantidad'] }})
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <div class="form-text">Solo se mostrarán productos disponibles.</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="cantidad" class="form-label">Cantidad a Asignar</label>
+                        <input type="number" name="cantidad" id="cantidad" class="form-control" min="1" placeholder="Ej: 1" required>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg">Registrar Asignación</button>
+                        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

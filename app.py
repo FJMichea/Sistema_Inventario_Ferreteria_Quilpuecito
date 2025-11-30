@@ -13,7 +13,7 @@ def get_db_connection():
     conn.execute("PRAGMA foreign_keys = ON")
     return conn
 
-
+# --- DECORADOR DE SEGURIDAD ---
 # Esta función verifica si estás logueado antes de dejarte entrar a una ruta
 def login_required(f):
     @wraps(f)
@@ -24,6 +24,7 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+# --- RUTAS DE AUTENTICACIÓN ---
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
@@ -76,6 +77,7 @@ def logout():
     flash('Has cerrado sesión.', 'info')
     return redirect(url_for('login'))
 
+# --- RUTAS DEL SISTEMA (Ahora protegidas) ---
 
 @app.route('/')
 @login_required # <--- Protección activada

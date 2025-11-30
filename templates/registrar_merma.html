@@ -1,24 +1,38 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Registrar Merma</title>
-</head>
-<body>
-    <h2>Registrar Merma de Producto</h2>
-    <form method="post">
-        Producto:<br>
-        <select name="producto_id" required>
-            {% for producto in productos %}
-                <option value="{{producto.id}}">{{producto.nombre}}</option>
-            {% endfor %}
-        </select><br><br>
+{% extends 'base.html' %}
 
-        Cantidad de Merma:<br>
-        <input type="number" name="merma" required><br><br>
-        <button type="submit">Registrar Merma</button>
-    </form>
-    <br>
-    <a href="/productos">Volver a Productos</a>
-</body>
-</html>
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card border-danger shadow">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">⚠️ Registrar Merma / Pérdida</h4>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">Utilice este formulario para descontar productos dañados o perdidos del inventario.</p>
+                
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="producto" class="form-label">Producto Afectado</label>
+                        <select name="producto_id" class="form-select" required>
+                            <option value="" selected disabled>-- Seleccionar Producto --</option>
+                            {% for producto in productos %}
+                                <option value="{{ producto['id'] }}">{{ producto['nombre'] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="merma" class="form-label">Cantidad Dañada</label>
+                        <input type="number" name="merma" class="form-control" min="1" required>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-danger">Registrar Pérdida</button>
+                        <a href="{{ url_for('index') }}" class="btn btn-link text-center mt-2">Volver al inicio</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
