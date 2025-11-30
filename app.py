@@ -173,5 +173,44 @@ def agregar_producto():
         return redirect('/productos')
     return render_template('agregar_producto.html')
 
+# --- RUTAS PARA GESTIONAR TRABAJADORES (EDITAR / ELIMINAR) ---
+
+@app.route('/eliminar_trabajador/<int:id>')
+@login_required
+def eliminar_trabajador(id):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM trabajadores WHERE id = ?', (id,))
+    conn.commit()
+    conn.close()
+    flash('Trabajador eliminado correctamente.', 'warning')
+    return redirect(url_for('trabajadores'))
+
+@app.route('/editar_trabajador/<int:id>', methods=['GET', 'POST'])
+@login_required
+def editar_trabajador(id):
+    conn = get_db_connection()
+    
+    # Si enviamos el formulario (POST), actualizamos los datos
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        cargo = request.form['cargo']
+        
+        conn.execute('UPDATE trabajadores SET nombre = ?, cargo = ? WHERE id = ?',
+                     (nombre, cargo, id))
+        conn.commit()
+        conn.close()
+        flash('Datos del trabajador actualizados.', 'success')
+        return redirect(url_for('trabajadores'))
+
+    # Si entramos a la página (GET), cargamos los datos actuales para mostrarlos
+    trabajador = conn.execute('SELECT * FROM trabajadores WHERE id = ?', (id,)).fetchone()
+    conn.close()
+    
+    if trabajador is None:
+        flash('Trabajador no encontrado.', 'danger')
+        return redirect(url_for('trabajadores'))
+        
+    return render_template('editar_trabajador.html', trabajador=trabajador)
+    
 if __name__ == '__main__':
     app.run(debug=True)

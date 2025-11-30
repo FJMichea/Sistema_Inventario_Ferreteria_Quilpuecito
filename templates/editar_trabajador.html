@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">✏️ Editar Trabajador</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre Completo</label>
+                        <input type="text" name="nombre" class="form-control" value="{{ trabajador['nombre'] }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="cargo" class="form-label">Cargo / Rol</label>
+                        <select name="cargo" class="form-select" required>
+                            <option value="{{ trabajador['cargo'] }}" selected hidden>{{ trabajador['cargo'] }} (Actual)</option>
+                            <option value="Administrador">Administrador</option>
+                            <option value="Ventas">Ventas</option>
+                            <option value="Inventario">Inventario</option>
+                            <option value="Cajas">Cajas</option>
+                            <option value="Despacho">Despacho</option>
+                            <option value="Recepción de mercadería">Recepción de mercadería</option>
+                            <option value="Atención al cliente">Atención al cliente</option>
+                        </select>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        <a href="{{ url_for('trabajadores') }}" class="btn btn-outline-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -3,29 +3,43 @@
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>👷 Listado de Trabajadores</h2>
-</div>
+    </div>
 
-<div class="card">
+<div class="card shadow-sm">
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-hover">
-                <thead class="table-secondary">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
                     <tr>
                         <th>ID</th>
                         <th>Nombre del Empleado</th>
                         <th>Cargo / Rol</th>
+                        <th class="text-end">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for trabajador in trabajadores %}
                     <tr>
-                        <td>#{{ trabajador['id'] }}</td>
-                        <td>{{ trabajador['nombre'] }}</td>
-                        <td><span class="badge bg-info text-dark">{{ trabajador['cargo'] }}</span></td>
+                        <td>{{ trabajador['id'] }}</td>
+                        <td class="fw-bold">{{ trabajador['nombre'] }}</td>
+                        <td>
+                            <span class="badge bg-info text-dark">{{ trabajador['cargo'] }}</span>
+                        </td>
+                        <td class="text-end">
+                            <a href="{{ url_for('editar_trabajador', id=trabajador['id']) }}" class="btn btn-sm btn-warning">
+                                ✏️ Editar
+                            </a>
+                            
+                            <a href="{{ url_for('eliminar_trabajador', id=trabajador['id']) }}" 
+                               class="btn btn-sm btn-danger"
+                               onclick="return confirm('¿Estás seguro de eliminar a {{ trabajador.nombre }}? Esta acción no se puede deshacer.');">
+                                🗑️ Eliminar
+                            </a>
+                        </td>
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="3" class="text-center">No hay trabajadores registrados.</td>
+                        <td colspan="4" class="text-center py-4">No hay trabajadores registrados.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
