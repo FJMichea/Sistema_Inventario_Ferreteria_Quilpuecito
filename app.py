@@ -1,3 +1,6 @@
+from io import BytesIO
+from xhtml2pdf import pisa
+from flask import make_response
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -80,9 +83,49 @@ def logout():
 # --- RUTAS DEL SISTEMA (Ahora protegidas) ---
 
 @app.route('/')
-@login_required # <--- Protección activada
+@login_required
 def index():
-    return render_template('index.html')
+    conn = get_db_connection()
+    
+    # --- 1. CÁLCULO DE INDICADORES (KPIs) ---
+    # Total de productos únicos registrados
+    total_items = conn.execute('SELECT COUNT(*) FROM productos').fetchone()[0]
+    
+    # Productos con stock crítico (menos de 5 unidades)
+    stock_critico = conn.execute('SELECT COUNT(*) FROM productos WHERE cantidad < 5').fetchone()[0]
+    
+    # Valor total del inventario (Dinero invertido en bodega)
+    valor_inventario = conn.execute('SELECT SUM(cantidad * precio) FROM productos').fetchone()[0]
+    # Si no hay productos, valor_inventario podría ser None, lo cambiamos a 0
+    if valor_inventario is None: valor_inventario = 0
+
+    # Total de Mermas registradas
+    total_mermas = conn.execute('SELECT SUM(merma) FROM productos').fetchone()[0] or 0
+    
+    # --- 2. DATOS PARA GRÁFICOS ---
+    
+    # Gráfico 1: Top 5 Productos con mayor Stock
+    top_stock = conn.execute('SELECT nombre, cantidad FROM productos ORDER BY cantidad DESC LIMIT 5').fetchall()
+    # Separamos en dos listas para pasarlas fácil a Chart.js
+    nombres_stock = [row['nombre'] for row in top_stock]
+    cantidades_stock = [row['cantidad'] for row in top_stock]
+    
+    # Gráfico 2: Top 5 Productos con más Mermas (Pérdidas)
+    top_mermas = conn.execute('SELECT nombre, merma FROM productos WHERE merma > 0 ORDER BY merma DESC LIMIT 5').fetchall()
+    nombres_mermas = [row['nombre'] for row in top_mermas]
+    cantidades_mermas = [row['merma'] for row in top_mermas]
+    
+    conn.close()
+    
+    return render_template('index.html',
+                           total_items=total_items,
+                           stock_critico=stock_critico,
+                           valor_inventario=valor_inventario,
+                           total_mermas=total_mermas,
+                           nombres_stock=nombres_stock,
+                           cantidades_stock=cantidades_stock,
+                           nombres_mermas=nombres_mermas,
+                           cantidades_mermas=cantidades_mermas)
 
 @app.route('/productos')
 @login_required
@@ -290,6 +333,50 @@ def devolver_asignacion(id):
         
     conn.close()
     return redirect(url_for('mis_asignaciones'))
+
+# --- GENERACIÓN DE PDF ---
+
+@app.route('/generar_pdf/<int:id>')
+@login_required
+def generar_pdf(id):
+    conn = get_db_connection()
+    
+    # 1. Obtenemos todos los datos de esa asignación específica
+    query = '''
+        SELECT a.id, a.fecha, a.cantidad, 
+               p.nombre as producto, p.precio, 
+               t.nombre as trabajador, t.cargo
+        FROM asignaciones a
+        JOIN productos p ON a.producto_id = p.id
+        JOIN trabajadores t ON a.trabajador_id = t.id
+        WHERE a.id = ?
+    '''
+    asignacion = conn.execute(query, (id,)).fetchone()
+    conn.close()
+    
+    if not asignacion:
+        flash('Asignación no encontrada.', 'danger')
+        return redirect(url_for('mis_asignaciones'))
+
+    # 2. Renderizamos el HTML del PDF (usaremos una plantilla nueva)
+    html = render_template('pdf_comprobante.html', a=asignacion)
+    
+    # 3. Convertimos el HTML a PDF usando xhtml2pdf
+    pdf = BytesIO()
+    pisa_status = pisa.CreatePDF(BytesIO(html.encode("UTF-8")), dest=pdf)
+    
+    # 4. Si no hubo errores, descargamos el archivo
+    if not pisa_status.err:
+        pdf.seek(0)
+        response = make_response(pdf.read())
+        # Esto hace que el navegador descargue el archivo con nombre "Comprobante_ID.pdf"
+        response.headers['Content-Type'] = 'application/pdf'
+        response.headers['Content-Disposition'] = f'attachment; filename=Comprobante_{id}.pdf'
+        return response
+    
+    flash('Error al generar el PDF.', 'danger')
+    return redirect(url_for('mis_asignaciones'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)

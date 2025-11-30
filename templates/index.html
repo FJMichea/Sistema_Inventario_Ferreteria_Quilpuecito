@@ -1,53 +1,138 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-8 text-center">
-        <div class="p-5 mb-4 bg-white rounded-3 shadow-sm">
-            <h1 class="display-5 fw-bold text-primary">Sistema de Gestión</h1>
-            <p class="col-md-12 fs-4">Bienvenido al sistema de control de inventario de <strong>Ferretería Quilpuecito Ltda</strong>.</p>
-            
-            <hr class="my-4">
-            
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <a href="{{ url_for('productos') }}" class="btn btn-primary btn-lg px-4 gap-3">
-                    📦 Ver Inventario
-                </a>
-                <a href="{{ url_for('asignar') }}" class="btn btn-outline-secondary btn-lg px-4">
-                    📋 Asignar Herramienta
-                </a>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold text-primary">Panel de Control</h2>
+        <p class="text-muted">Resumen ejecutivo de Ferretería Quilpuecito</p>
+    </div>
+    <div class="text-end">
+        <a href="{{ url_for('registrar_merma') }}" class="btn btn-danger shadow-sm me-2">
+            ⚠️ Registrar Merma
+        </a>
+        <a href="{{ url_for('asignar') }}" class="btn btn-primary shadow-sm">
+            🚀 Nueva Asignación
+        </a>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card border-left-primary shadow h-100 py-2 border-primary border-3 border-top-0 border-end-0 border-bottom-0">
+            <div class="card-body">
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Valorización Inventario</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">${{ "{:,.0f}".format(valor_inventario).replace(',', '.') }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card border-left-danger shadow h-100 py-2 border-danger border-3 border-top-0 border-end-0 border-bottom-0">
+            <div class="card-body">
+                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Alertas Stock Bajo</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stock_critico }} Productos</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card border-left-info shadow h-100 py-2 border-info border-3 border-top-0 border-end-0 border-bottom-0">
+            <div class="card-body">
+                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Referencias</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_items }} Items</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card border-left-warning shadow h-100 py-2 border-warning border-3 border-top-0 border-end-0 border-bottom-0">
+            <div class="card-body">
+                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Unidades Perdidas (Merma)</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_mermas }} Unid.</div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row mt-4">
-    <div class="col-md-4">
-        <div class="card text-center h-100">
+<div class="row">
+    <div class="col-xl-8 col-lg-7">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Top 5 Productos con Mayor Stock</h6>
+            </div>
             <div class="card-body">
-                <h5 class="card-title">Inventario</h5>
-                <p class="card-text">Gestiona productos, stock y precios.</p>
-                <a href="{{ url_for('productos') }}" class="btn btn-sm btn-primary">Ir a Productos</a>
+                <div class="chart-area">
+                    <canvas id="myAreaChart"></canvas>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card text-center h-100">
-            <div class="card-body">
-                <h5 class="card-title">Trabajadores</h5>
-                <p class="card-text">Administra la nómina de empleados.</p>
-                <a href="{{ url_for('trabajadores') }}" class="btn btn-sm btn-primary">Ir a Trabajadores</a>
+
+    <div class="col-xl-4 col-lg-5">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Pérdidas por Producto</h6>
             </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card text-center h-100">
             <div class="card-body">
-                <h5 class="card-title">Mermas</h5>
-                <p class="card-text">Registro de pérdidas y daños.</p>
-                <a href="{{ url_for('registrar_merma') }}" class="btn btn-sm btn-danger">Registrar Merma</a>
+                <div class="chart-pie pt-4 pb-2">
+                    <canvas id="myPieChart"></canvas>
+                </div>
+                {% if not cantidades_mermas %}
+                    <p class="text-center text-muted mt-3"><small>¡Excelente! No hay mermas registradas.</small></p>
+                {% endif %}
             </div>
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // --- Configuración Gráfico de Barras (Stock) ---
+    const ctxArea = document.getElementById('myAreaChart').getContext('2d');
+    const myAreaChart = new Chart(ctxArea, {
+        type: 'bar',
+        data: {
+            labels: {{ nombres_stock | tojson }}, // Pasamos datos desde Python
+            datasets: [{
+                label: 'Unidades en Bodega',
+                data: {{ cantidades_stock | tojson }},
+                backgroundColor: 'rgba(78, 115, 223, 0.7)',
+                borderColor: 'rgba(78, 115, 223, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // --- Configuración Gráfico de Torta (Mermas) ---
+    // Solo renderizamos si hay datos de mermas
+    {% if cantidades_mermas %}
+    const ctxPie = document.getElementById('myPieChart').getContext('2d');
+    const myPieChart = new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: {{ nombres_mermas | tojson }},
+            datasets: [{
+                data: {{ cantidades_mermas | tojson }},
+                backgroundColor: ['#e74a3b', '#f6c23e', '#36b9cc', '#1cc88a', '#858796'],
+                hoverBackgroundColor: ['#c0392b', '#d4a61c', '#2c9faf', '#17a673', '#60616f'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+    {% endif %}
+</script>
+
 {% endblock %}
