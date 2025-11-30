@@ -1,80 +1,99 @@
-# Sistema de Gestión de Inventario - Ferretería Quilpuecito
+# 🛠️ Sistema de Gestión de Inventario - Ferretería Quilpuecito v2.0
 
-## Descripción del Proyecto
+> **Trabajo de Aplicación Práctica (TAP) - Analista Programador y Análisis de Sistemas** > *Una solución robusta, escalable y eficiente para la administración de activos y stock.*
 
-Este proyecto consiste en el desarrollo de un sistema de gestión web básico, diseñado para apoyar la organización interna de pequeñas empresas del rubro ferretero. Fue creado como Trabajo de Aplicación Práctica (TAP) para la carrera de Analista Programador y Análisis de Sistemas en AIEP.
+---
 
-La solución aborda problemáticas comunes en ferreterías que operan con procesos manuales o dispersos para el control de stock, asignaciones y pérdidas de productos. 
-Generando errores, mermas y falta de trazabilidad. El sistema proporciona una herramienta eficiente y económica para digitalizar y organizar estos procesos.
+## 📖 Descripción del Proyecto
 
-## Funcionalidades Principales
+Bienvenido al repositorio oficial del **Sistema de Gestión de Inventario para Ferretería Quilpuecito**. Este proyecto nace como una respuesta tecnológica a la necesidad de digitalizar procesos manuales, minimizar mermas y garantizar la trazabilidad de herramientas y productos.
 
-El sistema implementado ofrece las siguientes características clave:
+En su versión actual (**v2.0**), el sistema ha evolucionado de un registro básico a una **plataforma web integral** que incorpora seguridad, inteligencia de negocios (BI) y generación de documentación formal, demostrando la viabilidad de tecnologías ligeras como Flask y SQLite para entornos empresariales PYME.
 
-* **Gestión de Productos:** Permite registrar nuevos productos, visualizar un listado dinámico de los productos almacenados con su nombre, cantidad, precio y merma, y controlar el inventario en tiempo real.
-* **Gestión de Trabajadores:** Despliega un listado de todos los trabajadores registrados, incluyendo nombre y cargo, fundamental para la asignación de productos.
-* **Asignación de Productos:** Permite asignar productos específicos a trabajadores seleccionándolos desde listas desplegables, registrando la cantidad asignada.
-* **Control de Merma:** Facilita el registro de pérdida o deterioro de productos, actualizando automáticamente la cantidad de merma asociada a cada producto en el sistema.
-* **Informes Básicos:** Posibilidad de generar informes (ej. productos asignados por trabajador) mediante consultas directas a la base de datos, útil para supervisión interna y planificación de stock.
+---
 
-## Tecnologías Utilizadas
+## 🚀 Funcionalidades Principales
 
-* **Lenguaje de Programación:** Python 
-* **Framework Web:** Flask 
-* **Base de Datos:** SQLite 
-* **Interfaz de Usuario:** HTML 
-* **Herramientas de Desarrollo:** Visual Studio Code , DB Browser for SQLite , Trello (simulado para gestión ágil) 
+### 📊 Dashboard Gerencial (Business Intelligence)
+- **Panel de Control Visual:** Gráficos interactivos (Chart.js) para monitorear el estado del inventario en tiempo real.
+- **KPIs Automáticos:** Visualización instantánea del valor total del inventario, alertas de stock crítico (< 5 unidades) y conteo de mermas.
 
-## Metodología de Desarrollo
+### 🛡️ Seguridad y Control de Acceso
+- **Autenticación Robusta:** Sistema de Login y Registro con encriptación de contraseñas (`Werkzeug Security`).
+- **Protección de Rutas:** Decoradores de sesión para restringir el acceso a usuarios no autorizados.
 
-Para la planificación y gestión de las actividades del proyecto, se utilizó la metodología ágil **Kanban**. Esto permitió dividir el trabajo en etapas claras y manejables, simulando un flujo de trabajo mediante columnas visuales (`Por hacer`, `En desarrollo`, `Terminado`) para organizar las tareas y cumplir con los tiempos establecidos.
+### 📦 Gestión de Inventario (CRUD Completo)
+- **Administración Total:** Crear, editar y eliminar productos y trabajadores.
+- **Búsqueda Inteligente:** Tablas dinámicas con filtros en tiempo real y paginación (**DataTables**), optimizadas para grandes volúmenes de datos.
 
-## Estructura de la Base de Datos
+### 📋 Asignaciones y Trazabilidad
+- **Ciclo de Préstamo:** Asignación de herramientas a trabajadores con descuento automático de stock.
+- **Devoluciones:** Proceso de retorno de activos que restaura el inventario disponible.
+- **Respaldo Documental:** Generación automática de **Comprobantes en PDF** listos para firmar (`xhtml2pdf`), garantizando responsabilidad legal.
 
-El sistema utiliza una base de datos SQLite con las siguientes tablas principales:
+### ⚠️ Control de Pérdidas
+- Módulo dedicado para el registro y auditoría de Mermas.
 
-* `productos`: Para almacenar la información de cada producto (ID, nombre, cantidad, precio, merma).
-* `trabajadores`: Para registrar a los empleados (ID, nombre, cargo).
-* `asignaciones`: Para registrar qué producto fue asignado a qué trabajador, incluyendo la cantidad y la fecha.
+---
 
-## Cómo Ejecutar el Proyecto
+## 🛠️ Tecnologías Utilizadas
 
-Para poner en marcha este sistema localmente, sigue los siguientes pasos:
+* **Backend:** Python 3, Flask (Microframework).
+* **Base de Datos:** SQLite 3 (Relacional).
+* **Frontend:** HTML5, CSS3, Bootstrap 5 (Diseño Responsivo).
+* **Librerías Clave:**
+    * `Werkzeug`: Seguridad y Hashing.
+    * `xhtml2pdf`: Motor de reportes PDF.
+    * `Chart.js`: Visualización de datos.
+    * `DataTables` + `jQuery`: Interfaz de tablas avanzadas.
 
-1.  **Clonar el Repositorio:**
-    ```bash
-    git clone [https://github.com/FJMichea/Sistema_Inventario_Ferreteria_Quilpuecito.git](https://github.com/FJMichea/Sistema_Inventario_Ferreteria_Quilpuecito.git)
-    cd Sistema_Inventario_Ferreteria_Quilpuecito
-    ```
-2.  **Configurar Entorno Virtual (Recomendado):**
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate  # En macOS/Linux
-    # venv\Scripts\activate.bat  # En Windows
-    ```
-3.  **Instalar Dependencias:**
-    ```bash
-    pip install Flask
-    ```
-    (Asegúrate de instalar cualquier otra dependencia si tu proyecto usa más que Flask).
-4.  **Inicializar la Base de Datos:**
-    El proyecto incluye un archivo `schema.sql`. Ejecútalo para crear la estructura de la base de datos:
-    ```python
-    # Puedes crear un pequeño script en Python (ej. init_db.py) para esto:
-    # import sqlite3
-    # conn = sqlite3.connect('ferreteria.db')
-    # with open('schema.sql') as f:
-    #     conn.executescript(f.read())
-    # conn.close()
-    ```
-    O puedes usar `DB Browser for SQLite` para abrir `ferreteria.db` y cargar `schema.sql`.
-5.  **Ejecutar la Aplicación Flask:**
-    ```bash
-    export FLASK_APP=app.py # En macOS/Linux
-    # set FLASK_APP=app.py # En Windows
-    flask run
-    ```
-    La aplicación se ejecutará en `http://127.0.0.1:5000`.
+---
+
+## ⚙️ Instalación y Configuración
+
+Sigue estos pasos para ejecutar el proyecto en un entorno local o en GitHub Codespaces.
+
+### 1. Prerrequisitos del Sistema (Importante para PDF)
+Para que la generación de PDFs funcione, es necesario instalar las librerías gráficas del sistema operativo (Cairo).
+
+**En Linux / GitHub Codespaces:**
+```bash
+sudo apt-get update
+sudo apt-get install -y libcairo2-dev pkg-config python3-dev
+
+2. Clonar el Repositorio
+
+git clone [https://github.com/FJMichea/Sistema_Inventario_Ferreteria_Quilpuecito.git](https://github.com/FJMichea/Sistema_Inventario_Ferreteria_Quilpuecito.git)
+cd Sistema_Inventario_Ferreteria_Quilpuecito
+
+3. Entorno Virtual y Dependencias Python
+
+# Crear entorno virtual (Opcional pero recomendado)
+python3 -m venv venv
+source venv/bin/activate  # En Windows: venv\Scripts\activate
+
+# Instalar librerías de Python
+pip install Flask werkzeug xhtml2pdf
+
+4. Inicialización de Base de Datos
+El proyecto incluye scripts para configurar la base de datos automáticamente con datos de prueba.
+
+# 1. Crear estructura de tablas (Usuarios, Productos, Trabajadores, Asignaciones)
+python -c "import sqlite3; conn = sqlite3.connect('ferreteria.db'); conn.executescript(open('schema.sql').read()); conn.close()"
+
+# 2. Cargar datos ficticios (Seed Data)
+python cargar_datos.py
+
+5. Ejecutar la Aplicación
+
+python app.py
+
+El sistema estará disponible en: http://127.0.0.1:5000
+
+👤 Autor
+Francisco J. Michea Analista Programador / Análisis de Sistemas AIEP
+
+Este proyecto representa un compromiso con la mejora continua y la aplicación práctica de conocimientos en desarrollo de software.
 
 
 ## Capturas de Pantalla
@@ -119,5 +138,3 @@ Se proponen las siguientes mejoras para futuras iteraciones del sistema:
 * Integrar autenticación de usuarios para control de acceso.
 * Generación de reportes en formato PDF.
 * Mejoras visuales en la interfaz de usuario con CSS o Bootstrap.
-
----
