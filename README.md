@@ -143,5 +143,5 @@ Se proponen las siguientes mejoras para futuras iteraciones del sistema:
 * Refactorización de Código
 * Base de Datos y Escalabilidad
 * Mejoras Funcionales de Negocio
-*DevOps y Despliegue
+* DevOps y Despliegue
 *Interfaz y Experiencia
