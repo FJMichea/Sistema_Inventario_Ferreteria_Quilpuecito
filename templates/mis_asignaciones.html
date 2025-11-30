@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>📋 Control de Asignaciones Activas</h2>
+    <a href="{{ url_for('asignar') }}" class="btn btn-primary">Nueva Asignación</a>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+        {% if asignaciones %}
+        <table class="table table-hover align-middle">
+            <thead class="table-secondary">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Trabajador</th>
+                    <th>Producto</th>
+                    <th>Cant.</th>
+                    <th class="text-end">Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in asignaciones %}
+                <tr>
+                    <td>{{ a['fecha'] }}</td>
+                    <td class="fw-bold">{{ a['trabajador'] }}</td>
+                    <td>{{ a['producto'] }}</td>
+                    <td><span class="badge bg-secondary rounded-pill">{{ a['cantidad'] }}</span></td>
+                    <td class="text-end">
+                        <a href="{{ url_for('devolver_asignacion', id=a['id']) }}" 
+                           class="btn btn-sm btn-success"
+                           onclick="return confirm('¿Confirmar devolución? El stock aumentará.');">
+                            ✅ Devolver
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <div class="alert alert-warning text-center">
+                No hay herramientas asignadas actualmente. Todo el stock está en bodega.
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">Editar Producto</div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label>Nombre</label>
+                        <input type="text" name="nombre" class="form-control" value="{{ producto['nombre'] }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Precio</label>
+                        <input type="number" name="precio" class="form-control" value="{{ producto['precio'] }}" required>
+                    </div>
+                    <div class="alert alert-info">
+                        <small>Nota: El stock solo se modifica mediante Asignaciones, Mermas o Compras (ingreso manual).</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

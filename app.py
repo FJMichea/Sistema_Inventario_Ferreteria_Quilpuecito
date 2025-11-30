@@ -212,5 +212,84 @@ def editar_trabajador(id):
         
     return render_template('editar_trabajador.html', trabajador=trabajador)
     
+    # --- GESTIÓN DE PRODUCTOS (EDITAR / ELIMINAR) ---
+
+@app.route('/editar_producto/<int:id>', methods=['GET', 'POST'])
+@login_required
+def editar_producto(id):
+    conn = get_db_connection()
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        precio = request.form['precio']
+        # Nota: No permitimos editar cantidad directamente para no romper la lógica de mermas/asignaciones
+        # La cantidad se ajusta por asignación o merma.
+        
+        conn.execute('UPDATE productos SET nombre = ?, precio = ? WHERE id = ?',
+                     (nombre, precio, id))
+        conn.commit()
+        conn.close()
+        flash('Producto actualizado.', 'success')
+        return redirect(url_for('productos'))
+
+    producto = conn.execute('SELECT * FROM productos WHERE id = ?', (id,)).fetchone()
+    conn.close()
+    return render_template('editar_producto.html', producto=producto)
+
+@app.route('/eliminar_producto/<int:id>')
+@login_required
+def eliminar_producto(id):
+    conn = get_db_connection()
+    try:
+        conn.execute('DELETE FROM productos WHERE id = ?', (id,))
+        conn.commit()
+        flash('Producto eliminado.', 'warning')
+    except sqlite3.IntegrityError:
+        flash('No se puede eliminar: El producto tiene asignaciones o mermas asociadas.', 'danger')
+    finally:
+        conn.close()
+    return redirect(url_for('productos'))
+
+# --- GESTIÓN DE ASIGNACIONES (VER Y DEVOLVER) ---
+
+@app.route('/mis_asignaciones')
+@login_required
+def mis_asignaciones():
+    conn = get_db_connection()
+    # Consulta compleja (JOIN) para traer nombres en lugar de solo IDs
+    query = '''
+        SELECT a.id, p.nombre as producto, t.nombre as trabajador, a.cantidad, a.fecha
+        FROM asignaciones a
+        JOIN productos p ON a.producto_id = p.id
+        JOIN trabajadores t ON a.trabajador_id = t.id
+        ORDER BY a.fecha DESC
+    '''
+    asignaciones = conn.execute(query).fetchall()
+    conn.close()
+    return render_template('mis_asignaciones.html', asignaciones=asignaciones)
+
+@app.route('/devolver_asignacion/<int:id>')
+@login_required
+def devolver_asignacion(id):
+    conn = get_db_connection()
+    
+    # 1. Obtener datos de la asignación antes de borrarla
+    asignacion = conn.execute('SELECT producto_id, cantidad FROM asignaciones WHERE id = ?', (id,)).fetchone()
+    
+    if asignacion:
+        # 2. Devolver el stock al inventario
+        conn.execute('UPDATE productos SET cantidad = cantidad + ? WHERE id = ?',
+                     (asignacion['cantidad'], asignacion['producto_id']))
+        
+        # 3. Borrar la asignación (o podríamos moverla a una tabla 'historial_devoluciones' si quisieras ser más pro)
+        conn.execute('DELETE FROM asignaciones WHERE id = ?', (id,))
+        
+        conn.commit()
+        flash('Herramienta devuelta. Stock restaurado.', 'success')
+    else:
+        flash('Error al intentar devolver.', 'danger')
+        
+    conn.close()
+    return redirect(url_for('mis_asignaciones'))
+
 if __name__ == '__main__':
     app.run(debug=True)
