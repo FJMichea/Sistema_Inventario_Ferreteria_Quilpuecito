@@ -95,6 +95,7 @@ Francisco J. Michea Analista Programador / Análisis de Sistemas AIEP
 
 Este proyecto representa un compromiso con la mejora continua y la aplicación práctica de conocimientos en desarrollo de software.
 
+---
 
 ## Capturas de Pantalla
 
@@ -126,16 +127,21 @@ Este proyecto representa un compromiso con la mejora continua y la aplicación p
 * **Comandos en Terminal:**
     ![Terminal Commands](<img width="468" alt="image" src="https://github.com/user-attachments/assets/019e4ff7-648a-4030-80ee-d33bdfc0ee77" />
 ) 
-
+---
 
 ## Conclusiones y Reflexiones
 
-El desarrollo de este sistema permitió la aplicación práctica de conocimientos en desarrollo backend, bases de datos y planificación ágil. Se comprobó que tecnologías ligeras como Flask y SQLite son viables para las necesidades de pequeñas empresas.
- Este proyecto no solo representa una solución técnica funcional, sino también un ejemplo del compromiso con la mejora continua y la aplicación práctica del conocimiento adquirido durante la formación profesional.
+El desarrollo de este sistema permitió la aplicación práctica de conocimientos en desarrollo backend, bases de datos y planificación ágil.
+Se comprobó que tecnologías ligeras como Flask y SQLite son viables para las necesidades de pequeñas empresas.
+Este proyecto no solo representa una solución técnica funcional, sino también un ejemplo del compromiso con la mejora continua y la aplicación práctica del conocimiento adquirido durante la formación profesional.
+
+---
 
 ## Mejoras Futuras
 
 Se proponen las siguientes mejoras para futuras iteraciones del sistema:
-* Integrar autenticación de usuarios para control de acceso.
-* Generación de reportes en formato PDF.
-* Mejoras visuales en la interfaz de usuario con CSS o Bootstrap.
+* Refactorización de Código
+* Base de Datos y Escalabilidad
+* Mejoras Funcionales de Negocio
+*DevOps y Despliegue
+*Interfaz y Experiencia
